@@ -2,7 +2,7 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Savings Bank | অ্যাডমিন প্যানেল</title>
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -12,46 +12,42 @@
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: 'Hind Siliguri', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            overflow-x: hidden;
         }
-
-        .animated-bg {
+        /* মোবাইলের জন্য নিচের নেভিগেশন বার */
+        .mobile-bottom-nav {
+            display: none;
             position: fixed;
-            top: 0;
+            bottom: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
+            right: 0;
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            justify-content: space-around;
+            z-index: 1000;
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
-
-        .animated-bg::before {
-            content: '';
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 1%, transparent 1%);
-            background-size: 50px 50px;
-            animation: moveDots 20s linear infinite;
+        .mobile-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 11px;
         }
-
-        @keyframes moveDots {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
-        }
-
+        .mobile-nav-item i { font-size: 20px; }
+        .mobile-nav-item.active { color: #3b82f6; }
         .app-container {
             display: flex;
             min-height: 100vh;
             position: relative;
             z-index: 1;
         }
-
         .sidebar {
             width: 280px;
             background: rgba(15, 23, 42, 0.95);
@@ -65,20 +61,9 @@
             transition: all 0.3s ease;
             box-shadow: 2px 0 20px rgba(0,0,0,0.1);
         }
-
-        .sidebar::-webkit-scrollbar {
-            width: 5px;
-        }
-
-        .sidebar::-webkit-scrollbar-track {
-            background: #1e293b;
-        }
-
-        .sidebar::-webkit-scrollbar-thumb {
-            background: #3b82f6;
-            border-radius: 10px;
-        }
-
+        .sidebar::-webkit-scrollbar { width: 5px; }
+        .sidebar::-webkit-scrollbar-track { background: #1e293b; }
+        .sidebar::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
         .logo-area {
             display: flex;
             align-items: center;
@@ -86,9 +71,7 @@
             padding-bottom: 24px;
             border-bottom: 1px solid rgba(255,255,255,0.1);
             margin-bottom: 24px;
-            animation: slideInLeft 0.5s ease;
         }
-
         .logo-icon {
             width: 48px;
             height: 48px;
@@ -99,17 +82,20 @@
             justify-content: center;
             animation: pulse 2s infinite;
         }
-
         @keyframes pulse {
-            0%, 100% { transform: scale(1); }
+            0%,100% { transform: scale(1); }
             50% { transform: scale(1.05); }
         }
-
         .logo-icon i { font-size: 24px; color: white; }
-        .logo-text h2 { font-size: 20px; font-weight: 700; background: linear-gradient(135deg, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .logo-text h2 {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
         .logo-text p { font-size: 11px; color: #94a3b8; margin-top: 4px; }
         .logo-text .founder { font-size: 9px; color: #64748b; margin-top: 3px; }
-
         .nav-item {
             display: flex;
             align-items: center;
@@ -119,57 +105,20 @@
             margin-bottom: 8px;
             cursor: pointer;
             color: #94a3b8;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s;
             position: relative;
             overflow: hidden;
         }
-
-        .nav-item::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(59, 130, 246, 0.3);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .nav-item:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-
         .nav-item i { width: 22px; font-size: 18px; position: relative; z-index: 1; }
         .nav-item span { position: relative; z-index: 1; }
         .nav-item:hover { color: white; background: rgba(59, 130, 246, 0.2); transform: translateX(5px); }
         .nav-item.active { background: linear-gradient(135deg, #3b82f6, #8b5cf6); color: white; box-shadow: 0 4px 15px rgba(59,130,246,0.3); }
-        
-        .logout-item {
-            margin-top: 20px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 20px;
-        }
-
+        .logout-item { margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
         .main-content {
             flex: 1;
             margin-left: 280px;
             padding: 28px 32px;
-            animation: fadeIn 0.5s ease;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
         .header {
             background: rgba(255,255,255,0.95);
             backdrop-filter: blur(10px);
@@ -179,23 +128,17 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            animation: slideInDown 0.5s ease;
         }
-
-        @keyframes slideInDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .header h1 { 
-            font-size: 24px; 
-            font-weight: 700; 
+        .header h1 {
+            font-size: 24px;
+            font-weight: 700;
             background: linear-gradient(135deg, #667eea, #764ba2);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
         .live-time {
             background: linear-gradient(135deg, #667eea, #764ba2);
             padding: 8px 18px;
@@ -206,14 +149,12 @@
             align-items: center;
             gap: 8px;
         }
-
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 24px;
             margin-bottom: 28px;
         }
-
         .stat-card {
             background: rgba(255,255,255,0.95);
             backdrop-filter: blur(10px);
@@ -222,23 +163,10 @@
             display: flex;
             align-items: center;
             gap: 20px;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
             cursor: pointer;
-            animation: slideInUp 0.5s ease;
-            position: relative;
-            overflow: hidden;
         }
-
-        @keyframes slideInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-
+        .stat-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
         .stat-icon {
             width: 65px;
             height: 65px;
@@ -249,26 +177,24 @@
             justify-content: center;
             animation: float 3s ease-in-out infinite;
         }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
         .stat-icon i { font-size: 32px; color: white; }
-        .stat-info h3 { font-size: 14px; color: #64748b; font-weight: 500; margin-bottom: 8px; }
-        .stat-info h2 { font-size: 36px; font-weight: 700; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
+        .stat-info h3 { font-size: 14px; color: #64748b; margin-bottom: 8px; }
+        .stat-info h2 {
+            font-size: 36px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
         .content-card {
             background: rgba(255,255,255,0.95);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 28px;
+            margin-bottom: 28px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            animation: fadeInUp 0.6s ease;
         }
-
         .card-header {
             display: flex;
             justify-content: space-between;
@@ -279,66 +205,37 @@
             flex-wrap: wrap;
             gap: 15px;
         }
-
-        .card-header h3 { font-size: 20px; font-weight: 600; color: #1e293b; }
-
+        .card-header h3 { font-size: 20px; color: #1e293b; }
         .search-input {
             padding: 10px 18px;
             border: 2px solid #e2e8f0;
             border-radius: 12px;
             font-size: 14px;
             width: 280px;
-            transition: all 0.3s ease;
-            font-family: 'Hind Siliguri', sans-serif;
         }
-
-        .search-input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
-        }
-
         table {
             width: 100%;
             border-collapse: collapse;
         }
-
-        th {
+        th, td {
+            padding: 14px 12px;
             text-align: left;
-            padding: 14px 12px;
-            font-size: 14px;
-            font-weight: 600;
-            color: #64748b;
-            border-bottom: 2px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
         }
-
-        td {
-            padding: 14px 12px;
-            font-size: 14px;
-            color: #1e293b;
-            border-bottom: 1px solid #f1f5f9;
-        }
-
-        tr:hover td {
-            background: #f8fafc;
-        }
-
+        th { color: #64748b; font-weight: 600; }
+        tr:hover td { background: #f8fafc; }
         .btn-edit, .btn-delete, .btn-primary, .btn-view {
             border: none;
             padding: 8px 16px;
             border-radius: 10px;
             font-size: 13px;
             cursor: pointer;
-            transition: all 0.3s ease;
             font-weight: 500;
-            font-family: 'Hind Siliguri', sans-serif;
         }
-
         .btn-edit { background: linear-gradient(135deg, #f59e0b, #f97316); color: white; margin-right: 8px; }
         .btn-delete { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
-        .btn-primary { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 12px 24px; font-size: 14px; }
+        .btn-primary { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 12px 24px; }
         .btn-view { background: linear-gradient(135deg, #06b6d4, #0891b2); color: white; margin-right: 8px; }
-
         .form-group { margin-bottom: 20px; }
         .form-group label { display: block; font-size: 14px; font-weight: 500; color: #1e293b; margin-bottom: 8px; }
         .form-group input, .form-group select, .form-group textarea {
@@ -347,21 +244,20 @@
             border: 2px solid #e2e8f0;
             border-radius: 12px;
             font-size: 14px;
-            font-family: 'Hind Siliguri', sans-serif;
         }
-
         .modal {
             display: none;
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: rgba(0,0,0,0.6);
             backdrop-filter: blur(5px);
             align-items: center;
             justify-content: center;
             z-index: 1000;
         }
-
         .modal-content {
             background: white;
             padding: 32px;
@@ -371,43 +267,36 @@
             max-height: 80vh;
             overflow-y: auto;
         }
-
-        .modal-buttons { display: flex; gap: 12px; margin-top: 24px; }
-        .modal-buttons button { flex: 1; padding: 12px; border-radius: 12px; border: none; font-weight: 500; cursor: pointer; }
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+        .modal-buttons button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+        }
         .save-btn { background: #10b981; color: white; }
         .cancel-btn { background: #e2e8f0; color: #1e293b; }
-
-        .activity-log {
-            font-size: 13px;
-            line-height: 1.8;
-        }
-        .activity-item {
-            padding: 10px;
-            border-bottom: 1px solid #e2e8f0;
-            margin-bottom: 5px;
-        }
-        .activity-time {
-            color: #667eea;
-            font-weight: 500;
-            font-size: 11px;
-        }
-        .activity-action {
-            color: #1e293b;
-        }
-        .activity-mod {
-            color: #f59e0b;
-            font-weight: 500;
-        }
-
         @media (max-width: 768px) {
-            .sidebar { width: 80px; padding: 20px 12px; }
-            .logo-text, .nav-item span { display: none; }
-            .main-content { margin-left: 80px; padding: 20px; }
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; padding: 20px 16px 80px 16px; }
+            .mobile-bottom-nav { display: flex; }
+            .stats-grid { grid-template-columns: 1fr; gap: 15px; }
+            .stat-card { padding: 15px; }
+            .stat-icon { width: 50px; height: 50px; }
+            .stat-icon i { font-size: 24px; }
+            .stat-info h2 { font-size: 24px; }
+            .card-header { flex-direction: column; align-items: flex-start; }
+            .search-input { width: 100%; }
+            table { display: block; overflow-x: auto; white-space: nowrap; }
         }
     </style>
 </head>
 <body>
-<div class="animated-bg"></div>
 <div class="app-container">
     <div class="sidebar">
         <div class="logo-area">
@@ -418,95 +307,63 @@
                 <div class="founder">Founder by Sreebash Kumar</div>
             </div>
         </div>
-        <div class="nav-item active" onclick="showSection('dashboard')">
-            <i class="fas fa-tachometer-alt"></i><span>ড্যাশবোর্ড</span>
-        </div>
-        <div class="nav-item" onclick="showSection('users')">
-            <i class="fas fa-users"></i><span>ইউজার লিস্ট</span>
-        </div>
-        <div class="nav-item" onclick="showSection('addUser')">
-            <i class="fas fa-user-plus"></i><span>নতুন ইউজার</span>
-        </div>
-        <div class="nav-item" onclick="showSection('payments')">
-            <i class="fas fa-credit-card"></i><span>পেমেন্ট</span>
-        </div>
-        <div class="nav-item" onclick="showSection('notice')">
-            <i class="fas fa-bullhorn"></i><span>নোটিশ</span>
-        </div>
-        <div class="nav-item" onclick="showSection('tour')">
-            <i class="fas fa-umbrella-beach"></i><span>ট্যুর</span>
-        </div>
-        <div class="nav-item" onclick="showSection('moderator')">
-            <i class="fas fa-user-shield"></i><span>মডারেটর</span>
-        </div>
-        <div class="nav-item" onclick="showSection('activity')">
-            <i class="fas fa-history"></i><span>এক্টিভিটি লগ</span>
-        </div>
-        <div class="nav-item logout-item" onclick="logout()">
-            <i class="fas fa-sign-out-alt"></i><span>লগআউট</span>
-        </div>
+        <div class="nav-item" data-section="dashboard"><i class="fas fa-tachometer-alt"></i><span>ড্যাশবোর্ড</span></div>
+        <div class="nav-item" data-section="users"><i class="fas fa-users"></i><span>ইউজার লিস্ট</span></div>
+        <div class="nav-item" data-section="addUser"><i class="fas fa-user-plus"></i><span>নতুন ইউজার</span></div>
+        <div class="nav-item" data-section="payments"><i class="fas fa-credit-card"></i><span>পেমেন্ট</span></div>
+        <div class="nav-item" data-section="notice"><i class="fas fa-bullhorn"></i><span>নোটিশ</span></div>
+        <div class="nav-item" data-section="tour"><i class="fas fa-umbrella-beach"></i><span>ট্যুর</span></div>
+        <div class="nav-item" data-section="moderator"><i class="fas fa-user-shield"></i><span>মডারেটর</span></div>
+        <div class="nav-item" data-section="activity"><i class="fas fa-history"></i><span>এক্টিভিটি লগ</span></div>
+        <div class="nav-item logout-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i><span>লগআউট</span></div>
     </div>
-
     <div class="main-content">
         <div class="header">
-            <h1><i class="fas fa-building-columns" style="color:#667eea; margin-right:10px;"></i> Savings Bank অ্যাডমিন ড্যাশবোর্ড</h1>
+            <h1><i class="fas fa-building-columns"></i> Savings Bank অ্যাডমিন ড্যাশবোর্ড</h1>
             <div class="live-time"><i class="far fa-clock"></i> <span id="liveTime"></span></div>
         </div>
-
+        <!-- ড্যাশবোর্ড -->
         <div id="dashboardSection" class="content-section">
             <div class="stats-grid">
                 <div class="stat-card"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-info"><h3>মোট ইউজার</h3><h2 id="totalUsers">0</h2></div></div>
                 <div class="stat-card"><div class="stat-icon"><i class="fas fa-money-bill-wave"></i></div><div class="stat-info"><h3>মোট জমা</h3><h2>৳ <span id="totalDeposit">0</span></h2></div></div>
                 <div class="stat-card"><div class="stat-icon"><i class="fas fa-hourglass-half"></i></div><div class="stat-info"><h3>পেন্ডিং পেমেন্ট</h3><h2 id="pendingCount">0</h2></div></div>
             </div>
-            <div class="content-card">
-                <div class="card-header"><h3><i class="fas fa-history"></i> সাম্প্রতিক ইউজার</h3></div>
-                <div id="recentUsersList"></div>
-            </div>
+            <div class="content-card"><div class="card-header"><h3><i class="fas fa-history"></i> সাম্প্রতিক ইউজার</h3></div><div id="recentUsersList"></div></div>
         </div>
-
+        <!-- ইউজার লিস্ট -->
         <div id="usersSection" class="content-section" style="display:none;">
             <div class="content-card">
-                <div class="card-header">
-                    <h3><i class="fas fa-list"></i> সব ইউজার লিস্ট</h3>
-                    <input type="text" id="searchUser" class="search-input" placeholder="🔍 নাম বা মোবাইল সার্চ করুন...">
-                </div>
+                <div class="card-header"><h3><i class="fas fa-list"></i> সব ইউজার লিস্ট</h3><input type="text" id="searchUser" class="search-input" placeholder="🔍 নাম বা মোবাইল সার্চ করুন..."></div>
                 <div id="usersList" style="overflow-x: auto;">লোড হচ্ছে...</div>
             </div>
         </div>
-
+        <!-- নতুন ইউজার যোগ -->
         <div id="addUserSection" class="content-section" style="display:none;">
             <div class="content-card">
                 <div class="card-header"><h3><i class="fas fa-user-plus"></i> নতুন ইউজার যোগ করুন</h3></div>
-                <div class="form-group"><label>👤 পূর্ণ নাম</label><input type="text" id="newName" placeholder="নাম লিখুন"></div>
-                <div class="form-group"><label>📞 মোবাইল নম্বর</label><input type="text" id="newPhone" placeholder="01XXXXXXXXX" maxlength="11"></div>
-                <div class="form-group"><label>📂 বিভাগ</label><select id="newDept"><option value="ট্যুর-শেয়ার">🏝️ ট্যুর-শেয়ার</option><option value="চিকিৎসা-শেয়ার">🏥 চিকিৎসা-শেয়ার</option><option value="বাৎসরিক-শেয়ার">📆 বাৎসরিক-শেয়ার</option></select></div>
-                <div class="form-group"><label>🔑 পাসওয়ার্ড</label><input type="password" id="newPass" placeholder="পাসওয়ার্ড"></div>
-                <button class="btn-primary" onclick="addNewUser()"><i class="fas fa-save"></i> ইউজার অ্যাড করুন</button>
+                <div class="form-group"><label>পূর্ণ নাম</label><input type="text" id="newName" placeholder="নাম লিখুন"></div>
+                <div class="form-group"><label>মোবাইল নম্বর</label><input type="text" id="newPhone" placeholder="01XXXXXXXXX" maxlength="11"></div>
+                <div class="form-group"><label>বিভাগ</label><select id="newDept"><option value="ট্যুর-শেয়ার">ট্যুর-শেয়ার</option><option value="চিকিৎসা-শেয়ার">চিকিৎসা-শেয়ার</option><option value="বাৎসরিক-শেয়ার">বাৎসরিক-শেয়ার</option></select></div>
+                <div class="form-group"><label>পাসওয়ার্ড</label><input type="password" id="newPass" placeholder="পাসওয়ার্ড"></div>
+                <button class="btn-primary" onclick="adminAddUser()">ইউজার অ্যাড করুন</button>
             </div>
         </div>
-
+        <!-- পেমেন্ট রিকোয়েস্ট -->
         <div id="paymentsSection" class="content-section" style="display:none;">
-            <div class="content-card">
-                <div class="card-header"><h3><i class="fas fa-credit-card"></i> পেমেন্ট রিকোয়েস্ট</h3></div>
-                <div id="paymentsList" style="overflow-x: auto;">লোড হচ্ছে...</div>
-            </div>
+            <div class="content-card"><div class="card-header"><h3><i class="fas fa-credit-card"></i> পেমেন্ট রিকোয়েস্ট</h3></div><div id="paymentsList" style="overflow-x: auto;">লোড হচ্ছে...</div></div>
         </div>
-
+        <!-- নোটিশ -->
         <div id="noticeSection" class="content-section" style="display:none;">
             <div class="content-card">
                 <div class="card-header"><h3><i class="fas fa-bullhorn"></i> নোটিশ পাবলিশ করুন</h3></div>
-                <div class="form-group"><label>📱 নির্দিষ্ট মোবাইল (ঐচ্ছিক)</label><input type="text" id="noticePhone" placeholder="মোবাইল নম্বর"></div>
-                <div class="form-group"><label>📝 নোটিশ বার্তা</label><textarea id="noticeMsg" rows="4" placeholder="বার্তা লিখুন..."></textarea></div>
-                <button class="btn-primary" onclick="publishNotice()"><i class="fas fa-paper-plane"></i> পাবলিশ করুন</button>
-                
-                <div style="margin-top: 30px;">
-                    <div class="card-header"><h3><i class="fas fa-list"></i> নোটিশ সমূহ</h3></div>
-                    <div id="noticesList"></div>
-                </div>
+                <div class="form-group"><label>মোবাইল (ঐচ্ছিক)</label><input type="text" id="noticePhone" placeholder="মোবাইল নম্বর" maxlength="11"></div>
+                <div class="form-group"><label>বার্তা</label><textarea id="noticeMsg" rows="4" placeholder="বার্তা লিখুন..."></textarea></div>
+                <button class="btn-primary" onclick="publishNotice()">পাবলিশ করুন</button>
+                <div style="margin-top:30px;"><div class="card-header"><h3><i class="fas fa-list"></i> নোটিশ সমূহ</h3></div><div id="noticesList"></div></div>
             </div>
         </div>
-
+        <!-- ট্যুর প্ল্যান -->
         <div id="tourSection" class="content-section" style="display:none;">
             <div class="content-card">
                 <div class="card-header"><h3><i class="fas fa-umbrella-beach"></i> ট্যুর প্ল্যান সেটআপ</h3></div>
@@ -515,911 +372,47 @@
                 <div class="form-group"><label>⏱️ সময়কাল</label><input type="text" id="tourDuration" placeholder="কত দিন"></div>
                 <div class="form-group"><label>💰 খরচ</label><input type="text" id="tourCost" placeholder="প্রতি জন খরচ"></div>
                 <div class="form-group"><label>👥 সদস্য সংখ্যা</label><input type="text" id="tourLimit" placeholder="সর্বোচ্চ কত জন"></div>
-                <button class="btn-primary" onclick="saveTourPlan()"><i class="fas fa-save"></i> সেভ করুন</button>
-                
-                <div style="margin-top: 30px;">
-                    <div class="card-header"><h3><i class="fas fa-list"></i> ট্যুর প্ল্যান সমূহ</h3></div>
-                    <div id="tourPlansList"></div>
-                </div>
+                <button class="btn-primary" onclick="saveTourPlan()">সেভ করুন</button>
+                <div style="margin-top:30px;"><div class="card-header"><h3><i class="fas fa-list"></i> ট্যুর প্ল্যান সমূহ</h3></div><div id="tourPlansList"></div></div>
             </div>
         </div>
-
-        <!-- মডারেটর সেকশন (হিস্ট্রি বাটন সহ) -->
+        <!-- মডারেটর -->
         <div id="moderatorSection" class="content-section" style="display:none;">
             <div class="content-card">
                 <div class="card-header"><h3><i class="fas fa-user-shield"></i> মডারেটর অ্যাড করুন</h3></div>
-                <div class="form-group"><label>📞 মোবাইল নম্বর</label><input type="text" id="modPhone" placeholder="মোবাইল নম্বর" maxlength="11"></div>
-                <div class="form-group"><label>👤 ইউজারনেম</label><input type="text" id="modUsername" placeholder="ইউজারনেম"></div>
-                <div class="form-group"><label>🔑 পাসওয়ার্ড</label><input type="password" id="modPassword" placeholder="পাসওয়ার্ড"></div>
-                <div style="background: #f8fafc; padding: 20px; border-radius: 16px; margin-bottom: 20px;">
-                    <label style="display:block; margin-bottom: 12px; font-weight: 600;">🔒 পারমিশন দিন:</label>
-                    <label><input type="checkbox" id="permUsers"> 👥 ইউজার লিস্ট</label> &nbsp;&nbsp;
-                    <label><input type="checkbox" id="permNotice"> 📢 নোটিশ</label> &nbsp;&nbsp;
-                    <label><input type="checkbox" id="permTour"> 🏨 ট্যুর</label> &nbsp;&nbsp;
-                    <label><input type="checkbox" id="permPayments"> 💰 পেমেন্ট</label> &nbsp;&nbsp;
-                    <label><input type="checkbox" id="permAddUser"> ➕ অ্যাড ইউজার</label>
+                <div class="form-group"><label>মোবাইল নম্বর</label><input type="text" id="modPhone" placeholder="মোবাইল নম্বর" maxlength="11"></div>
+                <div class="form-group"><label>ইউজারনেম</label><input type="text" id="modUsername" placeholder="ইউজারনেম"></div>
+                <div class="form-group"><label>পাসওয়ার্ড</label><input type="password" id="modPassword" placeholder="পাসওয়ার্ড"></div>
+                <div style="background:#f8fafc;padding:20px;border-radius:16px;margin-bottom:20px;">
+                    <label style="display:block;margin-bottom:12px;font-weight:600;">🔒 পারমিশন দিন:</label>
+                    <label><input type="checkbox" id="permUsers"> ইউজার লিস্ট</label> &nbsp;
+                    <label><input type="checkbox" id="permNotice"> নোটিশ</label> &nbsp;
+                    <label><input type="checkbox" id="permTour"> ট্যুর</label> &nbsp;
+                    <label><input type="checkbox" id="permPayments"> পেমেন্ট</label> &nbsp;
+                    <label><input type="checkbox" id="permAddUser"> অ্যাড ইউজার</label>
                 </div>
-                <button class="btn-primary" onclick="addModerator()"><i class="fas fa-save"></i> মডারেটর অ্যাড করুন</button>
-                
-                <div style="margin-top: 30px;">
-                    <div class="card-header"><h3><i class="fas fa-list"></i> মডারেটর লিস্ট</h3></div>
-                    <div id="moderatorsList" style="overflow-x: auto;"></div>
-                </div>
+                <button class="btn-primary" onclick="addModerator()">মডারেটর অ্যাড করুন</button>
+                <div style="margin-top:30px;"><div class="card-header"><h3><i class="fas fa-list"></i> মডারেটর লিস্ট</h3></div><div id="moderatorsList" style="overflow-x:auto;"></div></div>
             </div>
         </div>
-
-        <!-- এক্টিভিটি লগ সেকশন -->
+        <!-- এক্টিভিটি লগ -->
         <div id="activitySection" class="content-section" style="display:none;">
             <div class="content-card">
-                <div class="card-header">
-                    <h3><i class="fas fa-history"></i> মডারেটর এক্টিভিটি লগ</h3>
-                    <button class="btn-edit" onclick="clearActivityLog()" style="background: #ef4444;">সব ডিলিট</button>
-                </div>
-                <div id="activityList" style="max-height: 500px; overflow-y: auto;"></div>
+                <div class="card-header"><h3><i class="fas fa-history"></i> এক্টিভিটি লগ (৭ দিন)</h3><button class="btn-edit" onclick="clearActivityLog()" style="background:#ef4444;">সব ডিলিট</button></div>
+                <div id="activityList" style="max-height:500px; overflow-y:auto;"></div>
             </div>
         </div>
     </div>
 </div>
+<!-- মোবাইল নেভিগেশন -->
+<div class="mobile-bottom-nav" id="mobileBottomNav"></div>
 
-<!-- ইউজার এডিট মোডাল -->
-<div id="editModal" class="modal">
-    <div class="modal-content">
-        <h3 style="margin-bottom:20px;">✏️ ইউজার তথ্য এডিট</h3>
-        <input type="hidden" id="editOldPhone">
-        <div class="form-group"><label>নাম</label><input type="text" id="editName"></div>
-        <div class="form-group"><label>মোবাইল</label><input type="text" id="editPhone" maxlength="11"></div>
-        <div class="form-group"><label>বিভাগ</label><select id="editDept"><option value="ট্যুর-শেয়ার">ট্যুর-শেয়ার</option><option value="চিকিৎসা-শেয়ার">চিকিৎসা-শেয়ার</option><option value="বাৎসরিক-শেয়ার">বাৎসরিক-শেয়ার</option></select></div>
-        <div class="form-group"><label>পাসওয়ার্ড</label><input type="text" id="editPass"></div>
-        <div class="modal-buttons"><button class="save-btn" onclick="saveEditUser()">সেভ করুন</button><button class="cancel-btn" onclick="closeModal()">বাতিল করুন</button></div>
-    </div>
-</div>
+<!-- মোডাল গুলো -->
+<div id="editModal" class="modal"><div class="modal-content"><h3>✏️ ইউজার তথ্য এডিট</h3><input type="hidden" id="editOldPhone"><div class="form-group"><label>নাম</label><input type="text" id="editName"></div><div class="form-group"><label>মোবাইল</label><input type="text" id="editPhone" maxlength="11"></div><div class="form-group"><label>বিভাগ</label><select id="editDept"><option value="ট্যুর-শেয়ার">ট্যুর-শেয়ার</option><option value="চিকিৎসা-শেয়ার">চিকিৎসা-শেয়ার</option><option value="বাৎসরিক-শেয়ার">বাৎসরিক-শেয়ার</option></select></div><div class="form-group"><label>পাসওয়ার্ড</label><input type="text" id="editPass"></div><div class="modal-buttons"><button class="save-btn" onclick="saveEditUser()">সেভ</button><button class="cancel-btn" onclick="closeModal()">বাতিল</button></div></div></div>
+<div id="editNoticeModal" class="modal"><div class="modal-content"><h3>✏️ নোটিশ এডিট</h3><input type="hidden" id="editNoticeIndex"><div class="form-group"><label>মোবাইল</label><input type="text" id="editNoticePhone" maxlength="11"></div><div class="form-group"><label>বার্তা</label><textarea id="editNoticeMsg" rows="4"></textarea></div><div class="modal-buttons"><button class="save-btn" onclick="saveEditNotice()">সেভ</button><button class="cancel-btn" onclick="closeNoticeModal()">বাতিল</button></div></div></div>
+<div id="editTourModal" class="modal"><div class="modal-content"><h3>✏️ ট্যুর এডিট</h3><input type="hidden" id="editTourIndex"><div class="form-group"><label>গন্তব্য</label><input type="text" id="editTourDest"></div><div class="form-group"><label>তারিখ</label><input type="text" id="editTourDate"></div><div class="form-group"><label>সময়কাল</label><input type="text" id="editTourDuration"></div><div class="form-group"><label>খরচ</label><input type="text" id="editTourCost"></div><div class="form-group"><label>সদস্য সংখ্যা</label><input type="text" id="editTourLimit"></div><div class="modal-buttons"><button class="save-btn" onclick="saveEditTour()">সেভ</button><button class="cancel-btn" onclick="closeTourModal()">বাতিল</button></div></div></div>
+<div id="modHistoryModal" class="modal"><div class="modal-content"><h3 id="historyModalTitle">📋 মডারেটর হিস্ট্রি</h3><div id="modHistoryList" style="max-height:500px; overflow-y:auto;"></div><div class="modal-buttons"><button class="cancel-btn" onclick="closeHistoryModal()">বন্ধ</button></div></div></div>
 
-<!-- নোটিশ এডিট মোডাল -->
-<div id="editNoticeModal" class="modal">
-    <div class="modal-content">
-        <h3 style="margin-bottom:20px;">✏️ নোটিশ এডিট করুন</h3>
-        <input type="hidden" id="editNoticeIndex">
-        <div class="form-group"><label>📱 মোবাইল নম্বর (ঐচ্ছিক)</label><input type="text" id="editNoticePhone" placeholder="মোবাইল নম্বর" maxlength="11"></div>
-        <div class="form-group"><label>📝 নোটিশ বার্তা</label><textarea id="editNoticeMsg" rows="4" placeholder="বার্তা লিখুন..."></textarea></div>
-        <div class="modal-buttons"><button class="save-btn" onclick="saveEditNotice()">সেভ করুন</button><button class="cancel-btn" onclick="closeNoticeModal()">বাতিল করুন</button></div>
-    </div>
-</div>
-
-<!-- ট্যুর এডিট মোডাল -->
-<div id="editTourModal" class="modal">
-    <div class="modal-content">
-        <h3 style="margin-bottom:20px;">✏️ ট্যুর প্ল্যান এডিট করুন</h3>
-        <input type="hidden" id="editTourIndex">
-        <div class="form-group"><label>📍 গন্তব্য</label><input type="text" id="editTourDest"></div>
-        <div class="form-group"><label>📅 তারিখ</label><input type="text" id="editTourDate"></div>
-        <div class="form-group"><label>⏱️ সময়কাল</label><input type="text" id="editTourDuration"></div>
-        <div class="form-group"><label>💰 খরচ</label><input type="text" id="editTourCost"></div>
-        <div class="form-group"><label>👥 সদস্য সংখ্যা</label><input type="text" id="editTourLimit"></div>
-        <div class="modal-buttons"><button class="save-btn" onclick="saveEditTour()">সেভ করুন</button><button class="cancel-btn" onclick="closeTourModal()">বাতিল করুন</button></div>
-    </div>
-</div>
-
-<!-- মডারেটর হিস্ট্রি ভিউ মোডাল -->
-<div id="modHistoryModal" class="modal">
-    <div class="modal-content">
-        <h3 style="margin-bottom:20px;" id="historyModalTitle">📋 মডারেটর হিস্ট্রি</h3>
-        <div id="modHistoryList" style="max-height: 500px; overflow-y: auto;"></div>
-        <div class="modal-buttons"><button class="cancel-btn" onclick="closeHistoryModal()">বন্ধ করুন</button></div>
-    </div>
-</div>
-
-<script>
-let allUsers = [];
-let allPayments = [];
-let allNotices = [];
-let tourPlans = [];
-let moderators = [];
-let editTourIndex = null;
-let activityLog = [];
-
-const ADMIN_PHONE = "01815151122";
-
-// ============ এক্টিভিটি লগ ফাংশন ============
-function addActivityLog(moderatorName, action, details) {
-    let logs = JSON.parse(localStorage.getItem("moderatorActivityLog")) || [];
-    logs.unshift({
-        id: Date.now(),
-        moderator: moderatorName,
-        action: action,
-        details: details,
-        time: new Date().toLocaleString()
-    });
-    if(logs.length > 200) logs = logs.slice(0, 200);
-    localStorage.setItem("moderatorActivityLog", JSON.stringify(logs));
-    renderActivityLog();
-}
-
-function renderActivityLog() {
-    let container = document.getElementById("activityList");
-    if(!container) return;
-    
-    let logs = JSON.parse(localStorage.getItem("moderatorActivityLog")) || [];
-    
-    if(logs.length === 0) {
-        container.innerHTML = "<div style='text-align:center; padding:40px;'>📭 কোনো এক্টিভিটি লগ নেই</div>";
-        return;
-    }
-    
-    let html = `<table style="width:100%">
-        <thead>
-            <tr>
-                <th>সময়</th>
-                <th>মডারেটর</th>
-                <th>কাজ</th>
-                <th>বিস্তারিত</th>
-            </tr>
-        </thead>
-        <tbody>`;
-    
-    logs.forEach(log => {
-        html += `<tr>
-            <td><span class="activity-time">${log.time}</span></td>
-            <td><span class="activity-mod">${log.moderator}</span></td>
-            <td>${log.action}</td>
-            <td>${log.details}</td>
-        </tr>`;
-    });
-    
-    html += `</tbody><td>`;
-    container.innerHTML = html;
-}
-
-function getModeratorHistory(moderatorName) {
-    let logs = JSON.parse(localStorage.getItem("moderatorActivityLog")) || [];
-    let modLogs = logs.filter(log => log.moderator === moderatorName);
-    return modLogs;
-}
-
-function showModeratorHistory(moderatorName) {
-    let logs = getModeratorHistory(moderatorName);
-    let container = document.getElementById("modHistoryList");
-    document.getElementById("historyModalTitle").innerHTML = `📋 ${moderatorName} এর হিস্ট্রি`;
-    
-    if(logs.length === 0) {
-        container.innerHTML = "<div style='text-align:center; padding:40px;'>📭 কোনো এক্টিভিটি লগ নেই</div>";
-    } else {
-        let html = `<table style="width:100%">
-            <thead>
-                <tr><th>সময়</th><th>কাজ</th><th>বিস্তারিত</th></tr>
-            </thead>
-            <tbody>`;
-        logs.forEach(log => {
-            html += `<tr>
-                <td>${log.time}</td>
-                <td>${log.action}</td>
-                <td>${log.details}</td>
-            </tr>`;
-        });
-        html += `</tbody></table>`;
-        container.innerHTML = html;
-    }
-    document.getElementById("modHistoryModal").style.display = "flex";
-}
-
-function closeHistoryModal() {
-    document.getElementById("modHistoryModal").style.display = "none";
-}
-
-function clearActivityLog() {
-    if(confirm("সব এক্টিভিটি লগ ডিলিট করতে চান?")) {
-        localStorage.setItem("moderatorActivityLog", JSON.stringify([]));
-        renderActivityLog();
-        alert("✅ সব লগ ডিলিট হয়েছে!");
-    }
-}
-
-// ============ মূল ফাংশন ============
-function validatePhone(phone) {
-    const phoneRegex = /^01[3-9]\d{8}$/;
-    return phoneRegex.test(phone);
-}
-
-function loadAllData() {
-    let stored = localStorage.getItem("users");
-    if(stored) {
-        allUsers = JSON.parse(stored);
-    } else {
-        allUsers = [{ id: 1, name: "Sreebash Kumar Das", phone: ADMIN_PHONE, dept: "Savings Bank", pass: "admin", deposit: 0, role: "admin", status: "active", registerDate: new Date().toISOString() }];
-        localStorage.setItem("users", JSON.stringify(allUsers));
-    }
-    
-    allPayments = JSON.parse(localStorage.getItem("payments")) || [];
-    allNotices = JSON.parse(localStorage.getItem("globalNotices")) || [];
-    tourPlans = JSON.parse(localStorage.getItem("tourPlansList")) || [];
-    moderators = JSON.parse(localStorage.getItem("moderatorList")) || [];
-    
-    updateStats();
-    renderUsersList();
-    renderRecentUsers();
-    renderTourPlans();
-    renderNoticesList();
-    renderModerators();
-    renderActivityLog();
-}
-
-function updateStats() {
-    let totalApprovedDeposit = allUsers.reduce((s, u) => s + (Number(u.deposit) || 0), 0);
-    let activeUsersCount = allUsers.filter(u => u.role !== 'admin').length;
-    
-    let totalUsersEl = document.getElementById("totalUsers");
-    let totalDepositEl = document.getElementById("totalDeposit");
-    let pendingCountEl = document.getElementById("pendingCount");
-    
-    if(totalUsersEl) totalUsersEl.innerText = activeUsersCount;
-    if(totalDepositEl) totalDepositEl.innerText = totalApprovedDeposit;
-    if(pendingCountEl) pendingCountEl.innerText = allPayments.length;
-}
-
-function showSection(section) {
-    const sections = ["dashboardSection", "usersSection", "addUserSection", "paymentsSection", "noticeSection", "tourSection", "moderatorSection", "activitySection"];
-    sections.forEach(s => {
-        let el = document.getElementById(s);
-        if(el) el.style.display = "none";
-    });
-    
-    let targetSection = document.getElementById(section + "Section");
-    if(targetSection) targetSection.style.display = "block";
-    
-    document.querySelectorAll(".nav-item").forEach(item => item.classList.remove("active"));
-    const navItems = document.querySelectorAll(".nav-item");
-    const sectionsList = ["dashboard", "users", "addUser", "payments", "notice", "tour", "moderator", "activity"];
-    const index = sectionsList.indexOf(section);
-    if(navItems[index]) navItems[index].classList.add("active");
-    
-    if(section === "users") renderUsersList();
-    if(section === "payments") renderPaymentsList();
-    if(section === "moderator") renderModerators();
-    if(section === "tour") renderTourPlans();
-    if(section === "notice") renderNoticesList();
-    if(section === "activity") renderActivityLog();
-}
-
-function renderUsersList() {
-    let search = document.getElementById("searchUser")?.value.toLowerCase() || "";
-    let filtered = allUsers.filter(u => u.role !== 'admin' && (u.name.toLowerCase().includes(search) || u.phone.includes(search)));
-    
-    let container = document.getElementById("usersList");
-    if(!container) return;
-    
-    if(filtered.length === 0) {
-        container.innerHTML = "<div style='text-align:center; padding:40px;'>📭 কোন ইউজার খুঁজে পাওয়া যায়নি</div>";
-        return;
-    }
-    
-    let html = `<table><thead><tr><th>নাম</th><th>মোবাইল</th><th>বিভাগ</th><th>জমা</th><th>অ্যাকশন</th></tr></thead><tbody>`;
-    filtered.forEach(u => {
-        html += `<tr>
-            <td>${u.name}</td>
-            <td>${u.phone}</td>
-            <td>${u.dept}</td>
-            <td>৳ ${u.deposit || 0}</td>
-            <td>
-                <button class="btn-edit" onclick="openEdit('${u.phone}')">✏️ এডিট</button>
-                <button class="btn-delete" onclick="deleteUser('${u.phone}')">🗑️ ডিলিট</button>
-            </td>
-        </tr>`;
-    });
-    html += `</tbody><table>`;
-    container.innerHTML = html;
-}
-
-function renderRecentUsers() {
-    let recent = allUsers.filter(u => u.role !== 'admin').reverse().slice(0, 5);
-    let container = document.getElementById("recentUsersList");
-    if(!container) return;
-    
-    if(recent.length === 0) {
-        container.innerHTML = "<div style='text-align:center; padding:40px;'>📭 কোন ইউজার নেই</div>";
-        return;
-    }
-    
-    let html = `<table><thead><tr><th>নাম</th><th>মোবাইল</th><th>বিভাগ</th><th>জমা</th></tr></thead><tbody>`;
-    recent.forEach(u => html += `<tr><td>${u.name}</td><td>${u.phone}</td><td>${u.dept}</td><td>৳ ${u.deposit || 0}</td></tr>`);
-    html += `</tbody></table>`;
-    container.innerHTML = html;
-}
-
-function renderPaymentsList() {
-    let container = document.getElementById("paymentsList");
-    if(!container) return;
-    
-    allPayments = JSON.parse(localStorage.getItem("payments")) || [];
-    
-    if(allPayments.length === 0) {
-        container.innerHTML = "<div style='text-align:center; padding:40px;'>📭 কোনো পেমেন্ট রিকোয়েস্ট নেই</div>";
-        return;
-    }
-    
-    let html = `<table style="width:100%"><thead><tr><th>নাম</th><th>মোবাইল</th><th>সেকশন</th><th>টাকা</th><th>ট্রানজেকশন আইডি</th><th>অ্যাকশন</th></tr></thead><tbody>`;
-        
-    allPayments.forEach((p, idx) => {
-        html += `<tr>
-            <td>${p.name || 'N/A'}</td>
-            <td>${p.phone || 'N/A'}</td>
-            <td>${p.section || 'N/A'}</td>
-            <td>৳ ${p.amount || 0}</td>
-            <td><span style="color:#667eea; font-weight:500;">${p.transactionId || 'N/A'}</span></td>
-            <td>
-                <button class="btn-edit" onclick="approvePayment(${idx})">✅ অনুমোদন</button>
-                <button class="btn-delete" onclick="rejectPayment(${idx})">❌ বাতিল</button>
-            </td>
-        </tr>`;
-    });
-    
-    html += `</tbody></table>`;
-    container.innerHTML = html;
-}
-
-function approvePayment(idx) {
-    allPayments = JSON.parse(localStorage.getItem("payments")) || [];
-    
-    if(idx >= allPayments.length) {
-        alert("❌ পেমেন্ট খুঁজে পাওয়া যায়নি!");
-        return;
-    }
-    
-    let paid = allPayments[idx];
-    let user = allUsers.find(u => u.phone === paid.phone);
-    
-    if(user) {
-        let currentDeposit = Number(user.deposit) || 0;
-        let addAmount = Number(paid.amount) || 0;
-        user.deposit = currentDeposit + addAmount;
-        
-        allPayments.splice(idx, 1);
-        
-        localStorage.setItem("users", JSON.stringify(allUsers));
-        localStorage.setItem("payments", JSON.stringify(allPayments));
-        
-        let userPayments = JSON.parse(localStorage.getItem("userPayments")) || [];
-        let found = userPayments.find(up => up.transactionId === paid.transactionId && up.phone === paid.phone);
-        if(found) {
-            found.status = "approved";
-            localStorage.setItem("userPayments", JSON.stringify(userPayments));
-        }
-        
-        updateStats();
-        renderPaymentsList();
-        renderUsersList();
-        renderRecentUsers();
-        
-        alert(`✅ পেমেন্ট অনুমোদন করা হয়েছে!\n📞 ${paid.phone}\n💰 টাকা: ${addAmount} ৳\n🆔 ট্রানজেকশন আইডি: ${paid.transactionId || 'N/A'}\n💵 নতুন ব্যালেন্স: ${user.deposit} ৳`);
-    } else {
-        alert("❌ ইউজার খুঁজে পাওয়া যায়নি!");
-    }
-}
-
-function rejectPayment(idx) {
-    if(!confirm("আপনি কি নিশ্চিতভাবে এই পেমেন্টটি বাতিল করতে চান?")) {
-        return;
-    }
-    
-    allPayments = JSON.parse(localStorage.getItem("payments")) || [];
-    
-    if(idx >= allPayments.length) {
-        alert("❌ পেমেন্ট খুঁজে পাওয়া যায়নি!");
-        return;
-    }
-    
-    let paid = allPayments[idx];
-    
-    let userPayments = JSON.parse(localStorage.getItem("userPayments")) || [];
-    let found = userPayments.find(up => up.transactionId === paid.transactionId && up.phone === paid.phone);
-    if(found) {
-        found.status = "rejected";
-        localStorage.setItem("userPayments", JSON.stringify(userPayments));
-    }
-    
-    allPayments.splice(idx, 1);
-    localStorage.setItem("payments", JSON.stringify(allPayments));
-    
-    updateStats();
-    renderPaymentsList();
-    
-    alert("❌ পেমেন্ট বাতিল করা হয়েছে।");
-}
-
-function openEdit(phone) {
-    let user = allUsers.find(u => u.phone === phone);
-    if(user) {
-        document.getElementById("editOldPhone").value = user.phone;
-        document.getElementById("editName").value = user.name;
-        document.getElementById("editPhone").value = user.phone;
-        document.getElementById("editDept").value = user.dept;
-        document.getElementById("editPass").value = user.pass;
-        document.getElementById("editModal").style.display = "flex";
-    }
-}
-
-function closeModal() { 
-    document.getElementById("editModal").style.display = "none"; 
-}
-
-function saveEditUser() {
-    let oldPhone = document.getElementById("editOldPhone").value;
-    let newPhone = document.getElementById("editPhone").value.trim();
-    let idx = allUsers.findIndex(u => u.phone === oldPhone);
-    
-    if(idx !== -1) {
-        if(!validatePhone(newPhone)) {
-            alert("সঠিক বাংলাদেশি মোবাইল নম্বর দিন (01XXXXXXXXX)!");
-            return;
-        }
-        
-        if(oldPhone !== newPhone && allUsers.find(u => u.phone === newPhone)) {
-            alert("এই মোবাইল নম্বরটি already অন্য ইউজার ব্যবহার করছে!");
-            return;
-        }
-        
-        allUsers[idx].name = document.getElementById("editName").value.trim();
-        allUsers[idx].phone = newPhone;
-        allUsers[idx].dept = document.getElementById("editDept").value;
-        allUsers[idx].pass = document.getElementById("editPass").value.trim();
-        
-        localStorage.setItem("users", JSON.stringify(allUsers));
-        renderUsersList();
-        renderRecentUsers();
-        updateStats();
-        closeModal();
-        alert("✅ ইউজার তথ্য আপডেট হয়েছে!");
-    }
-}
-
-function deleteUser(phone) {
-    if(phone === ADMIN_PHONE) {
-        alert("অ্যাডমিন ডিলিট করা যাবে না!");
-        return;
-    }
-    if(confirm("আপনি কি এই ইউজারকে ডিলিট করতে চান?")) {
-        allUsers = allUsers.filter(u => u.phone !== phone);
-        localStorage.setItem("users", JSON.stringify(allUsers));
-        renderUsersList();
-        renderRecentUsers();
-        updateStats();
-        alert("✅ ইউজার ডিলিট হয়েছে");
-    }
-}
-
-function addNewUser() {
-    let name = document.getElementById("newName").value.trim();
-    let phone = document.getElementById("newPhone").value.trim();
-    let dept = document.getElementById("newDept").value;
-    let pass = document.getElementById("newPass").value.trim();
-    
-    if(!name || !phone || !pass) {
-        alert("সব ঘর পূরণ করুন!");
-        return;
-    }
-    
-    if(!validatePhone(phone)) {
-        alert("সঠিক বাংলাদেশি মোবাইল নম্বর দিন (01XXXXXXXXX)!");
-        return;
-    }
-    
-    if(allUsers.find(u => u.phone === phone)) {
-        alert("এই মোবাইল নম্বরটি already রেজিস্ট্রেশন করা আছে!");
-        return;
-    }
-    
-    if(pass.length < 4) {
-        alert("পাসওয়ার্ড কমপক্ষে ৪ অক্ষরের হতে হবে!");
-        return;
-    }
-    
-    let newUser = { 
-        id: Date.now(),
-        name: name, 
-        phone: phone, 
-        dept: dept, 
-        pass: pass, 
-        deposit: 0, 
-        role: "user",
-        status: "active",
-        registerDate: new Date().toISOString()
-    };
-    
-    allUsers.push(newUser);
-    localStorage.setItem("users", JSON.stringify(allUsers));
-    renderUsersList();
-    renderRecentUsers();
-    updateStats();
-    alert(`✅ ইউজার তৈরি হয়েছে!\nমোবাইল: ${phone}\nপাসওয়ার্ড: ${pass}`);
-    
-    document.getElementById("newName").value = "";
-    document.getElementById("newPhone").value = "";
-    document.getElementById("newPass").value = "";
-}
-
-// ============ নোটিশ ফাংশন ============
-function publishNotice() {
-    let msg = document.getElementById("noticeMsg").value.trim();
-    if(!msg) {
-        alert("বার্তা লিখুন!");
-        return;
-    }
-    let phone = document.getElementById("noticePhone").value.trim();
-    if(phone && !validatePhone(phone)) {
-        alert("সঠিক মোবাইল নম্বর দিন!");
-        return;
-    }
-    
-    allNotices.push({ 
-        phone: phone || "all", 
-        message: msg, 
-        date: new Date().toLocaleString(), 
-        by: "admin",
-        id: Date.now()
-    });
-    localStorage.setItem("globalNotices", JSON.stringify(allNotices));
-    alert("✅ নোটিশ পাবলিশ হয়েছে");
-    document.getElementById("noticeMsg").value = "";
-    document.getElementById("noticePhone").value = "";
-    renderNoticesList();
-}
-
-function renderNoticesList() {
-    let container = document.getElementById("noticesList");
-    if(!container) return;
-    
-    allNotices = JSON.parse(localStorage.getItem("globalNotices")) || [];
-    
-    if(allNotices.length === 0) {
-        container.innerHTML = "<div style='text-align:center; padding:30px;'>📭 কোনো নোটিশ নেই</div>";
-        return;
-    }
-    
-    let html = `<table style="width:100%">
-        <thead>
-            <tr>
-                <th>তারিখ</th>
-                <th>প্রেরক</th>
-                <th>মোবাইল</th>
-                <th>বার্তা</th>
-                <th>অ্যাকশন</th>
-            </tr>
-        </thead>
-        <tbody>`;
-    
-    allNotices.slice().reverse().forEach((notice, idx) => {
-        let originalIdx = allNotices.length - 1 - idx;
-        html += `<tr>
-            <td>${notice.date || 'N/A'}</td>
-            <td>${notice.by || 'admin'}</td>
-            <td>${notice.phone === 'all' ? 'সবাই' : notice.phone}</td>
-            <td>${notice.message}</td>
-            <td>
-                <button class="btn-edit" onclick="openEditNotice(${originalIdx})">✏️ এডিট</button>
-                <button class="btn-delete" onclick="deleteNotice(${originalIdx})">🗑️ ডিলিট</button>
-            </td>
-        </tr>`;
-    });
-    
-    html += `</tbody></table>`;
-    container.innerHTML = html;
-}
-
-function openEditNotice(index) {
-    let notice = allNotices[index];
-    if(notice) {
-        document.getElementById("editNoticeIndex").value = index;
-        document.getElementById("editNoticePhone").value = notice.phone === 'all' ? '' : notice.phone;
-        document.getElementById("editNoticeMsg").value = notice.message;
-        document.getElementById("editNoticeModal").style.display = "flex";
-    }
-}
-
-function saveEditNotice() {
-    let index = parseInt(document.getElementById("editNoticeIndex").value);
-    let phone = document.getElementById("editNoticePhone").value.trim();
-    let message = document.getElementById("editNoticeMsg").value.trim();
-    
-    if(!message) {
-        alert("বার্তা লিখুন!");
-        return;
-    }
-    if(phone && !validatePhone(phone)) {
-        alert("সঠিক মোবাইল নম্বর দিন!");
-        return;
-    }
-    
-    if(index >= 0 && index < allNotices.length) {
-        allNotices[index].phone = phone || "all";
-        allNotices[index].message = message;
-        allNotices[index].date = new Date().toLocaleString();
-        allNotices[index].by = "admin";
-        
-        localStorage.setItem("globalNotices", JSON.stringify(allNotices));
-        renderNoticesList();
-        closeNoticeModal();
-        alert("✅ নোটিশ আপডেট হয়েছে!");
-    }
-}
-
-function deleteNotice(index) {
-    if(confirm("আপনি কি এই নোটিশটি ডিলিট করতে চান?")) {
-        allNotices.splice(index, 1);
-        localStorage.setItem("globalNotices", JSON.stringify(allNotices));
-        renderNoticesList();
-        alert("🗑️ নোটিশ ডিলিট হয়েছে!");
-    }
-}
-
-function closeNoticeModal() {
-    document.getElementById("editNoticeModal").style.display = "none";
-}
-
-// ============ ট্যুর প্ল্যান ফাংশন ============
-function renderTourPlans() {
-    let container = document.getElementById("tourPlansList");
-    if(!container) return;
-    
-    tourPlans = JSON.parse(localStorage.getItem("tourPlansList")) || [];
-    
-    if(tourPlans.length === 0) {
-        container.innerHTML = "<div style='text-align:center; padding:30px;'>🏝️ কোনো ট্যুর প্ল্যান নেই</div>";
-        return;
-    }
-    
-    let html = `<table style="width:100%">
-        <thead>
-            <tr>
-                <th>গন্তব্য</th>
-                <th>তারিখ</th>
-                <th>সময়কাল</th>
-                <th>খরচ</th>
-                <th>সদস্য সীমা</th>
-                <th>অ্যাকশন</th>
-            </tr>
-        </thead>
-        <tbody>`;
-    
-    tourPlans.forEach((plan, idx) => {
-        html += `<tr>
-            <td>${plan.dest || 'N/A'}</td>
-            <td>${plan.date || 'N/A'}</td>
-            <td>${plan.duration || 'N/A'}</td>
-            <td>৳ ${plan.cost || 'N/A'}</td>
-            <td>${plan.limit || 'N/A'} জন</td>
-            <td>
-                <button class="btn-edit" onclick="openEditTour(${idx})">✏️ এডিট</button>
-                <button class="btn-delete" onclick="deleteTourPlan(${idx})">🗑️ ডিলিট</button>
-            </td>
-        </tr>`;
-    });
-    
-    html += `</tbody></table>`;
-    container.innerHTML = html;
-}
-
-function saveTourPlan() {
-    let dest = document.getElementById("tourDest").value.trim();
-    let date = document.getElementById("tourDate").value.trim();
-    let duration = document.getElementById("tourDuration").value.trim();
-    let cost = document.getElementById("tourCost").value.trim();
-    let limit = document.getElementById("tourLimit").value.trim();
-    
-    if(!dest || !date) {
-        alert("গন্তব্য ও তারিখ দিন!");
-        return;
-    }
-    
-    tourPlans.push({ 
-        dest, date, duration, cost, limit, 
-        id: Date.now(), createdBy: "admin"
-    });
-    localStorage.setItem("tourPlansList", JSON.stringify(tourPlans));
-    alert("✅ ট্যুর প্ল্যান সেভ হয়েছে!");
-    
-    document.getElementById("tourDest").value = "";
-    document.getElementById("tourDate").value = "";
-    document.getElementById("tourDuration").value = "";
-    document.getElementById("tourCost").value = "";
-    document.getElementById("tourLimit").value = "";
-    renderTourPlans();
-}
-
-function openEditTour(index) {
-    let plan = tourPlans[index];
-    if(plan) {
-        document.getElementById("editTourIndex").value = index;
-        document.getElementById("editTourDest").value = plan.dest;
-        document.getElementById("editTourDate").value = plan.date;
-        document.getElementById("editTourDuration").value = plan.duration || "";
-        document.getElementById("editTourCost").value = plan.cost || "";
-        document.getElementById("editTourLimit").value = plan.limit || "";
-        document.getElementById("editTourModal").style.display = "flex";
-    }
-}
-
-function saveEditTour() {
-    let index = parseInt(document.getElementById("editTourIndex").value);
-    if(index >= 0 && index < tourPlans.length) {
-        tourPlans[index] = {
-            dest: document.getElementById("editTourDest").value.trim(),
-            date: document.getElementById("editTourDate").value.trim(),
-            duration: document.getElementById("editTourDuration").value.trim(),
-            cost: document.getElementById("editTourCost").value.trim(),
-            limit: document.getElementById("editTourLimit").value.trim(),
-            id: tourPlans[index].id,
-            createdBy: "admin",
-            editedBy: "admin",
-            editTime: new Date().toLocaleString()
-        };
-        localStorage.setItem("tourPlansList", JSON.stringify(tourPlans));
-        renderTourPlans();
-        closeTourModal();
-        alert("✅ ট্যুর প্ল্যান আপডেট হয়েছে!");
-    }
-}
-
-function deleteTourPlan(index) {
-    if(confirm("আপনি কি এই ট্যুর প্ল্যানটি ডিলিট করতে চান?")) {
-        tourPlans.splice(index, 1);
-        localStorage.setItem("tourPlansList", JSON.stringify(tourPlans));
-        renderTourPlans();
-        alert("🗑️ ট্যুর প্ল্যান ডিলিট হয়েছে!");
-    }
-}
-
-function closeTourModal() {
-    document.getElementById("editTourModal").style.display = "none";
-}
-
-// ============ মডারেটর ফাংশন (হিস্ট্রি বাটন সহ) ============
-function renderModerators() {
-    let container = document.getElementById("moderatorsList");
-    if(!container) return;
-    
-    if(moderators.length === 0) {
-        container.innerHTML = "<div style='text-align:center; padding:20px;'>❌ কোনো মডারেটর নেই</div>";
-        return;
-    }
-    let html = `<table><thead><tr>
-        <th>মোবাইল</th>
-        <th>ইউজারনেম</th>
-        <th>পারমিশন</th>
-        <th>অ্যাকশন</th>
-    </tr></thead><tbody>`;
-    moderators.forEach((m, idx) => {
-        let perms = [];
-        if(m.perms?.accessUsers) perms.push("👥 ইউজার");
-        if(m.perms?.accessNotice) perms.push("📢 নোটিশ");
-        if(m.perms?.accessTour) perms.push("🏨 ট্যুর");
-        if(m.perms?.accessPayments) perms.push("💰 পেমেন্ট");
-        if(m.perms?.accessAddUser) perms.push("➕ অ্যাড");
-        html += `<tr>
-            <td>${m.phone}</td>
-            <td>${m.username}</td>
-            <td>${perms.join(", ")}</td>
-            <td>
-                <button class="btn-view" onclick="showModeratorHistory('${m.username}')">📋 হিস্ট্রি</button>
-                <button class="btn-edit" onclick="openEditModerator(${idx})">✏️ এডিট</button>
-                <button class="btn-delete" onclick="deleteModerator(${idx})">🗑️ ডিলিট</button>
-            </td>
-        </tr>`;
-    });
-    html += `</tbody></td>`;
-    container.innerHTML = html;
-}
-
-function openEditModerator(index) {
-    let moderator = moderators[index];
-    if(moderator) {
-        document.getElementById("modPhone").value = moderator.phone;
-        document.getElementById("modUsername").value = moderator.username;
-        document.getElementById("modPassword").value = moderator.pass;
-        document.getElementById("permUsers").checked = moderator.perms?.accessUsers || false;
-        document.getElementById("permNotice").checked = moderator.perms?.accessNotice || false;
-        document.getElementById("permTour").checked = moderator.perms?.accessTour || false;
-        document.getElementById("permPayments").checked = moderator.perms?.accessPayments || false;
-        document.getElementById("permAddUser").checked = moderator.perms?.accessAddUser || false;
-        
-        moderators.splice(index, 1);
-        alert("এখন এই মডারেটরের তথ্য এডিট করে 'মডারেটর অ্যাড করুন' বাটনে ক্লিক করুন");
-    }
-}
-
-function deleteModerator(idx) {
-    if(confirm("মডারেটর ডিলিট করবেন?")) {
-        let modName = moderators[idx].username;
-        moderators.splice(idx,1);
-        localStorage.setItem("moderatorList", JSON.stringify(moderators));
-        renderModerators();
-        addActivityLog("admin", "মডারেটর ডিলিট", `${modName} কে ডিলিট করা হয়েছে`);
-        alert("✅ মডারেটর ডিলিট হয়েছে");
-    }
-}
-
-function addModerator() {
-    let phone = document.getElementById("modPhone").value.trim();
-    let username = document.getElementById("modUsername").value.trim();
-    let pass = document.getElementById("modPassword").value.trim();
-    
-    if(!phone || !username || !pass) {
-        alert("সব ঘর পূরণ করুন!");
-        return;
-    }
-    
-    if(!validatePhone(phone)) {
-        alert("সঠিক বাংলাদেশি মোবাইল নম্বর দিন (01XXXXXXXXX)!");
-        return;
-    }
-    
-    let perms = {
-        accessUsers: document.getElementById("permUsers").checked,
-        accessNotice: document.getElementById("permNotice").checked,
-        accessTour: document.getElementById("permTour").checked,
-        accessPayments: document.getElementById("permPayments").checked,
-        accessAddUser: document.getElementById("permAddUser").checked
-    };
-    
-    moderators.push({ phone, username, pass, perms });
-    localStorage.setItem("moderatorList", JSON.stringify(moderators));
-    renderModerators();
-    addActivityLog("admin", "নতুন মডারেটর তৈরি", `${username} (${phone}) যোগ করা হয়েছে`);
-    alert("✅ মডারেটর যোগ হয়েছে");
-    
-    document.getElementById("modPhone").value = "";
-    document.getElementById("modUsername").value = "";
-    document.getElementById("modPassword").value = "";
-    document.getElementById("permUsers").checked = false;
-    document.getElementById("permNotice").checked = false;
-    document.getElementById("permTour").checked = false;
-    document.getElementById("permPayments").checked = false;
-    document.getElementById("permAddUser").checked = false;
-}
-
-function logout() {
-    localStorage.removeItem("loggedUser");
-    window.location.href = "index.html";
-}
-
-// ইভেন্ট লিসেনার
-let searchInput = document.getElementById("searchUser");
-if(searchInput) {
-    searchInput.addEventListener("keyup", () => renderUsersList());
-}
-
-window.onclick = function(e) {
-    let modal = document.getElementById("editModal");
-    if(e.target === modal) closeModal();
-    let noticeModal = document.getElementById("editNoticeModal");
-    if(e.target === noticeModal) closeNoticeModal();
-    let tourModal = document.getElementById("editTourModal");
-    if(e.target === tourModal) closeTourModal();
-    let historyModal = document.getElementById("modHistoryModal");
-    if(e.target === historyModal) closeHistoryModal();
-}
-
-document.getElementById("newPhone")?.addEventListener("input", function(e) {
-    this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11);
-});
-document.getElementById("editPhone")?.addEventListener("input", function(e) {
-    this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11);
-});
-document.getElementById("modPhone")?.addEventListener("input", function(e) {
-    this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11);
-});
-document.getElementById("editNoticePhone")?.addEventListener("input", function(e) {
-    this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11);
-});
-
-setInterval(() => {
-    let timeSpan = document.getElementById("liveTime");
-    if(timeSpan) timeSpan.innerText = new Date().toLocaleTimeString('bn-BD', { hour12: false });
-}, 1000);
-
-let loggedUser = JSON.parse(localStorage.getItem("loggedUser"));
-if(!loggedUser || loggedUser.role !== "admin") {
-    window.location.href = "index.html";
-}
-
-loadAllData();
-</script>
+<script src="admin.js"></script>
 </body>
 </html>
