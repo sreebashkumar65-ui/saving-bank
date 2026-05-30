@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savings Bank | ইউজার প্যানেল</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .animated-bg::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1%, transparent 1%);
+            background-size: 50px 50px;
+            animation: moveDots 20s linear infinite;
+        }
+
+        @keyframes moveDots {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 280px;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 28px 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+            transition: all 0.3s ease;
+            box-shadow: 2px 0 20px rgba(0,0,0,0.1);
+        }
+
+        .sidebar::-webkit-scrollbar {
+                    width: 5px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 10px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 24px;
+            animation: slideInLeft 0.5s ease;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .logo-icon i { font-size: 24px; color: white; }
+        .logo-text h2 { font-size: 20px; font-weight: 700; background: linear-gradient(135deg, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .logo-text p { font-size: 11px; color: #94a3b8; margin-top: 4px; }
+        .logo-text .founder { font-size: 9px; color: #64748b; margin-top: 3px; }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            color: #94a3b8;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(59, 130, 246, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .nav-item:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .nav-item i { width: 22px; font-size: 18px; position: relative; z-index: 1; }
+        .nav-item span { position: relative; z-index: 1; }
+        .nav-item:hover { color: white; background: rgba(59, 130, 246, 0.2); transform: translateX(5px); }
+        .nav-item.active { background: linear-gradient(135deg, #3b82f6, #8b5cf6); color: white; box-shadow: 0 4px 15px rgba(59,130,246,0.3); }
+        
+        .logout-item {
+            margin-top: 40px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 28px 32px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .header {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px 28px;
+            margin-bottom: 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            animation: slideInDown 0.5s ease;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        @keyframes slideInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header h1 { 
+            font-size: 24px; 
+            font-weight: 700; 
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .user-info {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 8px 18px;
+            border-radius: 50px;
+            color: white;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            animation: slideInUp 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .stat-card:hover::before {
+            left: 100%;
+        }
+
+        .stat-icon {
+            width: 65px;
+            height: 65px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .stat-icon i { font-size: 32px; color: white; }
+        .stat-info h3 { font-size: 14px; color: #64748b; font-weight: 500; margin-bottom: 8px; }
+        .stat-info h2 { font-size: 36px; font-weight: 700; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .content-card {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease;
+            margin-bottom: 28px;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content-card:hover {
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #f1f5f9;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .card-header h3 { font-size: 20px; font-weight: 600; color: #1e293b; }
+
+        .btn-primary, .btn-payment {
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-family: 'Hind Siliguri', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-payment {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+
+        .btn-primary:hover, .btn-payment:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: 'Hind Siliguri', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+        }
+
+        .profile-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .info-item {
+            background: #f8fafc;
+            padding: 15px 20px;
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .info-item label {
+            font-size: 12px;
+            color: #64748b;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .info-item p {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .notice-item {
+            background: #f8fafc;
+            padding: 15px 20px;
+            border-radius: 15px;
+            margin-bottom: 12px;
+            border-left: 4px solid #f59e0b;
+        }
+
+        .notice-item .notice-date {
+            font-size: 11px;
+            color: #94a3b8;
+            margin-bottom: 5px;
+        }
+
+        .notice-item .notice-message {
+            font-size: 14px;
+            color: #1e293b;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 32px;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 450px;
+            animation: slideInUp 0.3s ease;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .modal-buttons button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Hind Siliguri', sans-serif;
+        }
+
+        .confirm-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+
+        .cancel-btn {
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            animation: slideInDown 0.3s ease;
+        }
+
+        .alert.error {
+            background: #fee2e2;
+            border-left: 4px solid #ef4444;
+            color: #991b1b;
+            display: flex;
+        }
+
+        .alert.success {
+            background: #dcfce7;
+            border-left: 4px solid #10b981;
+            color: #065f46;
+            display: flex;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 80px;
+                padding: 20px 12px;
+            }
+            .logo-text, .nav-item span {
+                display: none;
+            }
+            .main-content {
+                margin-left: 80px;
+                padding: 20px;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .profile-info {
+                grid-template-columns: 1fr;
+            }
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="animated-bg"></div>
+<div class="app-container">
+    <div class="sidebar">
+        <div class="logo-area">
+            <div class="logo-icon"><i class="fas fa-building-columns"></i></div>
+            <div class="logo-text">
+                <h2>Savings Bank</h2>
+                <p>ইউজার প্যানেল</p>
+                <div class="founder">Founder by Sreebash Kumar</div>
+            </div>
+        </div>
+        <div class="nav-item active" onclick="showSection('dashboard')">
+            <i class="fas fa-tachometer-alt"></i><span>ড্যাশবোর্ড</span>
+        </div>
+        <div class="nav-item" onclick="showSection('profile')">
+            <i class="fas fa-user-circle"></i><span>প্রোফাইল</span>
+        </div>
+        <div class="nav-item" onclick="showSection('payment')">
+            <i class="fas fa-credit-card"></i><span>পেমেন্ট</span>
+        </div>
+        <div class="nav-item" onclick="showSection('notice')">
+            <i class="fas fa-bell"></i><span>নোটিশ</span>
+        </div>
+        <div class="nav-item" onclick="showSection('tour')">
+            <i class="fas fa-umbrella-beach"></i><span>ট্যুর প্ল্যান</span>
+        </div>
+        <div class="nav-item logout-item" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i><span>লগআউট</span>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1><i class="fas fa-building-columns" style="color:#667eea; margin-right:10px;"></i> Savings Bank ইউজার ড্যাশবোর্ড</h1>
+            <div class="user-info">
+                <i class="fas fa-user"></i>
+                <span id="userName">লোড হচ্ছে...</span>
+            </div>
+        </div>
+
+        <div id="alertMessage" class="alert"></div>
+
+        <!-- Dashboard Section -->
+        <div id="dashboardSection" class="content-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-money-bill-wave"></i></div>
+                    <div class="stat-info">
+                        <h3>মোট জমা</h3>
+                        <h2>৳ <span id="totalDeposit">0</span></h2>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
+                    <div class="stat-info">
+                        <h3>অ্যাকাউন্ট স্ট্যাটাস</h3>
+                        <h2 id="userStatus">Active</h2>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-layer-group"></i></div>
+                    <div class="stat-info">
+                        <h3>আপনার প্ল্যান</h3>
+                        <h2 id="userDept">-</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-bullhorn"></i> সর্বশেষ নোটিশ</h3>
+                    <button class="btn-primary" onclick="showSection('notice')">সব নোটিশ দেখুন</button>
+                </div>
+                <div id="latestNotices"></div>
+            </div>
+
+            <div class="content-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-umbrella-beach"></i> চলমান ট্যুর প্ল্যান</h3>
+                    <button class="btn-primary" onclick="showSection('tour')">সব ট্যুর দেখুন</button>
+                </div>
+                <div id="latestTours"></div>
+            </div>
+        </div>
+
+        <!-- Profile Section -->
+        <div id="profileSection" class="content-section" style="display:none;">
+            <div class="content-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-user-circle"></i> আপনার প্রোফাইল</h3>
+                    <button class="btn-primary" onclick="openEditProfileModal()">✏️ প্রোফাইল এডিট</button>
+                </div>
+                <div class="profile-info" id="profileInfo"></div>
+            </div>
+        </div>
+
+        <!-- Payment Section -->
+        <div id="paymentSection" class="content-section" style="display:none;">
+            <div class="content-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-credit-card"></i> পেমেন্ট করুন</h3>
+                </div>
+                <form id="paymentForm">
+                    <div class="form-group">
+                        <label>💰 পরিমাণ (টাকা)</label>
+                        <input type="number" id="paymentAmount" placeholder="যেমন: 500" required>
+                    </div>
+                    <div class="form-group">
+                        <label>📱 বিকাশ/নগদ নম্বর</label>
+                        <input type="tel" id="paymentNumber" placeholder="01XXXXXXXXX" maxlength="11" required>
+                    </div>
+                    <div class="form-group">
+                        <label>📝 ট্রানজেকশন আইডি</label>
+                        <input type="text" id="transactionId" placeholder="TXID..." required>
+                    </div>
+                    <button type="submit" class="btn-payment"><i class="fas fa-paper-plane"></i> পেমেন্ট সাবমিট করুন</button>
+                </form>
+            </div>
+
+            <div class="content-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-history"></i> পেমেন্ট হিস্টোরি</h3>
+                </div>
+                <div id="paymentHistory"></div>
+            </div>
+        </div>
+
+        <!-- Notice Section -->
+        <div id="noticeSection" class="content-section" style="display:none;">
+            <div class="content-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-bell"></i> সকল নোটিশ</h3>
+                </div>
+                <div id="allNotices"></div>
+            </div>
+        </div>
+
+        <!-- Tour Section -->
+        <div id="tourSection" class="content-section" style="display:none;">
+            <div class="content-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-umbrella-beach"></i> ট্যুর প্ল্যান সমূহ</h3>
+                </div>
+                <div id="tourPlansList"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Profile Modal -->
+<div id="editProfileModal" class="modal">
+    <div class="modal-content">
+        <h3 style="margin-bottom:20px;">✏️ প্রোফাইল এডিট</h3>
+        <div class="form-group">
+            <label>পূর্ণ নাম</label>
+            <input type="text" id="editName" placeholder="আপনার নাম">
+        </div>
+        <div class="form-group">
+            <label>পাসওয়ার্ড</label>
+            <input type="password" id="editPassword" placeholder="নতুন পাসওয়ার্ড">
+        </div>
+        <div class="modal-buttons">
+            <button class="confirm-btn" onclick="saveProfileEdit()">সেভ করুন</button>
+            <button class="cancel-btn" onclick="closeEditModal()">বাতিল করুন</button>
+        </div>
+    </div>
+</div>
+
+<script>
+let currentUser = null;
+let allUsers = [];
+let allNotices = [];
+let tourPlans = [];
+let paymentHistory = [];
+
+// লগইন চেক - একবারই
+let isRedirecting = false;
+let loggedUser = JSON.parse(localStorage.getItem("loggedUser"));
+if(!loggedUser || loggedUser.role !== "user") {
+    if(!isRedirecting) {
+        isRedirecting = true;
+        window.location.replace("index.html");
+    }
+}
+
+// শো অ্যালার্ট
+function showAlert(message, type) {
+    const alertDiv = document.getElementById('alertMessage');
+    alertDiv.innerHTML = `<i class="fas ${type === 'error' ? 'fa-exclamation-circle' : 'fa-check-circle'}"></i> ${message}`;
+    alertDiv.className = `alert ${type}`;
+    
+    setTimeout(() => {
+        alertDiv.style.display = 'none';
+    }, 3000);
+}
+
+// লোড ডাটা
+function loadAllData() {
+    // ইউজার লোড
+    let stored = localStorage.getItem("users");
+    if(stored) {
+        allUsers = JSON.parse(stored);
+    }
+    
+    // কারেন্ট ইউজার সেট
+    currentUser = allUsers.find(u => u.phone === loggedUser.phone);
+    if(currentUser) {
+        localStorage.setItem("loggedUser", JSON.stringify(currentUser));
+    }
+    
+    // নোটিশ লোড
+    let notices = localStorage.getItem("globalNotices");
+    allNotices = notices ? JSON.parse(notices) : [];
+    
+    // ট্যুর লোড
+    let tours = localStorage.getItem("tourPlansList");
+    tourPlans = tours ? JSON.parse(tours) : [];
+    
+    // পেমেন্ট হিস্টোরি লোড
+    let payments = localStorage.getItem("userPayments");
+    paymentHistory = payments ? JSON.parse(payments) : [];
+    
+    // রেন্ডার সব
+    renderDashboard();
+    renderProfile();
+    renderNotices();
+    renderTourPlans();
+    renderPaymentHistory();
+}
+
+function renderDashboard() {
+    // ইউজার ইনফো আপডেট
+    document.getElementById("userName").innerHTML = currentUser?.name || "ইউজার";
+    document.getElementById("totalDeposit").innerHTML = currentUser?.deposit || 0;
+    document.getElementById("userDept").innerHTML = currentUser?.dept || "-";
+    document.getElementById("userStatus").innerHTML = currentUser?.status === "active" ? "✅ সক্রিয়" : "⛔ নিষ্ক্রিয়";
+    
+    // লেটেস্ট নোটিশ (শেষ ৩টি)
+    let userNotices = allNotices.filter(n => n.phone === "all" || n.phone === currentUser?.phone);
+    let latest = userNotices.slice(-3).reverse();
+    let noticeHtml = '';
+    if(latest.length === 0) {
+        noticeHtml = '<div style="text-align:center; padding:20px;">📭 কোনো নোটিশ নেই</div>';
+    } else {
+        latest.forEach(notice => {
+            noticeHtml += `
+                <div class="notice-item">
+                    <div class="notice-date"><i class="far fa-clock"></i> ${notice.date}</div>
+                    <div class="notice-message">${notice.message}</div>
+                </div>
+            `;
+        });
+    }
+    document.getElementById("latestNotices").innerHTML = noticeHtml;
+    
+    // লেটেস্ট ট্যুর (শেষ ৩টি)
+    let latestTours = tourPlans.slice(-3).reverse();
+    let tourHtml = '';
+    if(latestTours.length === 0) {
+        tourHtml = '<div style="text-align:center; padding:20px;">🏝️ কোনো ট্যুর প্ল্যান নেই</div>';
+    } else {
+        latestTours.forEach(tour => {
+            tourHtml += `
+                <div class="notice-item" style="border-left-color: #10b981;">
+                    <div class="notice-date"><i class="fas fa-map-marker-alt"></i> ${tour.dest} | <i class="far fa-calendar"></i> ${tour.date}</div>
+                    <div class="notice-message">⏱️ সময়: ${tour.duration || 'নির্ধারিত নয়'} | 💰 খরচ: ${tour.cost || 'নির্ধারিত নয়'} | 👥 সীমা: ${tour.limit || 'নির্ধারিত নয়'}</div>
+                </div>
+            `;
+        });
+    }
+    document.getElementById("latestTours").innerHTML = tourHtml;
+}
+
+function renderProfile() {
+    let html = `
+        <div class="info-item"><label>👤 নাম</label><p>${currentUser?.name || ''}</p></div>
+        <div class="info-item"><label>📞 মোবাইল নম্বর</label><p>${currentUser?.phone || ''}</p></div>
+        <div class="info-item"><label>📂 বিভাগ</label><p>${currentUser?.dept || ''}</p></div>
+        <div class="info-item"><label>💰 মোট জমা</label><p>৳ ${currentUser?.deposit || 0}</p></div>
+        <div class="info-item"><label>📅 রেজিস্ট্রেশন তারিখ</label><p>${currentUser?.registerDate ? new Date(currentUser.registerDate).toLocaleDateString('bn-BD') : 'নির্ধারিত নয়'}</p></div>
+        <div class="info-item"><label>🔒 স্ট্যাটাস</label><p>${currentUser?.status === "active" ? "✅ সক্রিয়" : "⛔ নিষ্ক্রিয়"}</p></div>
+    `;
+    document.getElementById("profileInfo").innerHTML = html;
+}
+
+function renderNotices() {
+    let userNotices = allNotices.filter(n => n.phone === "all" || n.phone === currentUser?.phone);
+    if(userNotices.length === 0) {
+        document.getElementById("allNotices").innerHTML = '<div style="text-align:center; padding:40px;">📭 কোনো নোটিশ নেই</div>';
+        return;
+    }
+    let html = '';
+    userNotices.reverse().forEach(notice => {
+        html += `
+            <div class="notice-item">
+                <div class="notice-date"><i class="far fa-clock"></i> ${notice.date}</div>
+                <div class="notice-message">${notice.message}</div>
+            </div>
+        `;
+    });
+    document.getElementById("allNotices").innerHTML = html;
+}
+
+function renderTourPlans() {
+    if(tourPlans.length === 0) {
+        document.getElementById("tourPlansList").innerHTML = '<div style="text-align:center; padding:40px;">🏝️ কোনো ট্যুর প্ল্যান নেই</div>';
+        return;
+    }
+    let html = '';
+    tourPlans.reverse().forEach(tour => {
+        html += `
+            <div class="notice-item" style="border-left-color: #10b981; margin-bottom: 15px;">
+                <div class="notice-date"><i class="fas fa-map-marker-alt"></i> <strong>${tour.dest}</strong> | <i class="far fa-calendar"></i> ${tour.date}</div>
+                <div class="notice-message">
+                    ⏱️ সময়কাল: ${tour.duration || 'নির্ধারিত নয়'}<br>
+                    💰 খরচ: ${tour.cost || 'নির্ধারিত নয়'} টাকা<br>
+                    👥 সদস্য সীমা: ${tour.limit || 'নির্ধারিত নয়'} জন
+                </div>
+            </div>
+        `;
+    });
+    document.getElementById("tourPlansList").innerHTML = html;
+}
+
+function renderPaymentHistory() {
+    let userPayments = paymentHistory.filter(p => p.phone === currentUser?.phone);
+    if(userPayments.length === 0) {
+        document.getElementById("paymentHistory").innerHTML = '<div style="text-align:center; padding:40px;">📭 কোনো পেমেন্ট ইতিহাস নেই</div>';
+        return;
+    }
+    let html = `<tr><thead><tr><th>তারিখ</th><th>পরিমাণ</th><th>ট্রানজেকশন আইডি</th><th>স্ট্যাটাস</th></tr></thead><tbody>`;
+    userPayments.reverse().forEach(p => {
+        html += `<tr>
+            <td>${p.date || new Date().toLocaleString()}</td>
+            <td>৳ ${p.amount}</td>
+            <td>${p.transactionId}</td>
+            <td>${p.status === 'approved' ? '✅ অনুমোদিত' : '⏳ পেন্ডিং'}</td>
+        </tr>`;
+    });
+    html += `</tbody></table>`;
+    document.getElementById("paymentHistory").innerHTML = html;
+}
+
+// পেমেন্ট সাবমিট
+document.getElementById('paymentForm')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    let amount = document.getElementById("paymentAmount").value;
+    let paymentNumber = document.getElementById("paymentNumber").value.trim();
+    let transactionId = document.getElementById("transactionId").value.trim();
+    
+    if(!amount || amount < 50) {
+        showAlert("সঠিক পরিমাণ দিন (ন্যূনতম ৫০ টাকা)!", "error");
+        return;
+    }
+    
+    if(!paymentNumber || paymentNumber.length !== 11) {
+        showAlert("সঠিক মোবাইল নম্বর দিন!", "error");
+        return;
+    }
+    
+    if(!transactionId) {
+        showAlert("ট্রানজেকশন আইডি দিন!", "error");
+        return;
+    }
+    
+    // পেমেন্ট রিকোয়েস্ট সেভ
+    let paymentRequest = {
+        name: currentUser.name,
+        phone: currentUser.phone,
+        section: currentUser.dept,
+        amount: parseInt(amount),
+        transactionId: transactionId,
+        paymentNumber: paymentNumber,
+        date: new Date().toLocaleString(),
+        status: "pending"
+    };
+    
+    // পেমেন্ট রিকোয়েস্ট লোকাল স্টোরেজে সেভ
+    let allPayments = JSON.parse(localStorage.getItem("payments")) || [];
+    allPayments.push(paymentRequest);
+    localStorage.setItem("payments", JSON.stringify(allPayments));
+    
+    // ইউজার পেমেন্ট হিস্টোরি
+    let userPayments = JSON.parse(localStorage.getItem("userPayments")) || [];
+    userPayments.push({
+        phone: currentUser.phone,
+        amount: parseInt(amount),
+        transactionId: transactionId,
+        date: new Date().toLocaleString(),
+        status: "pending"
+    });
+    localStorage.setItem("userPayments", JSON.stringify(userPayments));
+    
+    showAlert("পেমেন্ট রিকোয়েস্ট সফল! অ্যাডমিন অনুমোদন দিলে জমা যোগ হবে।", "success");
+    
+    // ফর্ম ক্লিয়ার
+    document.getElementById("paymentAmount").value = "";
+    document.getElementById("paymentNumber").value = "";
+    document.getElementById("transactionId").value = "";
+    
+    renderPaymentHistory();
+});
+
+// প্রোফাইল এডিট
+function openEditProfileModal() {
+    document.getElementById("editName").value = currentUser?.name || "";
+    document.getElementById("editPassword").value = "";
+    document.getElementById("editProfileModal").style.display = "flex";
+}
+
+function closeEditModal() {
+    document.getElementById("editProfileModal").style.display = "none";
+}
+
+function saveProfileEdit() {
+    let newName = document.getElementById("editName").value.trim();
+    let newPassword = document.getElementById("editPassword").value.trim();
+    
+    if(newName) {
+        currentUser.name = newName;
+    }
+    if(newPassword && newPassword.length >= 4) {
+        currentUser.pass = newPassword;
+    } else if(newPassword && newPassword.length < 4) {
+        showAlert("পাসওয়ার্ড কমপক্ষে ৪ অক্ষরের হতে হবে!", "error");
+        return;
+    }
+    
+    // আপডেট ইউজার
+    let idx = allUsers.findIndex(u => u.phone === currentUser.phone);
+    if(idx !== -1) {
+        allUsers[idx] = currentUser;
+        localStorage.setItem("users", JSON.stringify(allUsers));
+        localStorage.setItem("loggedUser", JSON.stringify(currentUser));
+    }
+    
+    showAlert("প্রোফাইল আপডেট হয়েছে!", "success");
+    renderProfile();
+    renderDashboard();
+    closeEditModal();
+}
+
+// সেকশন শো
+function showSection(section) {
+    const sections = ["dashboardSection", "profileSection", "paymentSection", "noticeSection", "tourSection"];
+    sections.forEach(s => {
+        let el = document.getElementById(s);
+        if(el) el.style.display = "none";
+    });
+    
+    let targetSection = document.getElementById(section + "Section");
+    if(targetSection) targetSection.style.display = "block";
+    
+    document.querySelectorAll(".nav-item").forEach(item => item.classList.remove("active"));
+    const navItems = document.querySelectorAll(".nav-item");
+    const sectionsList = ["dashboard", "profile", "payment", "notice", "tour"];
+    const index = sectionsList.indexOf(section);
+    if(navItems[index]) navItems[index].classList.add("active");
+    
+    if(section === "payment") renderPaymentHistory();
+    if(section === "notice") renderNotices();
+    if(section === "tour") renderTourPlans();
+}
+
+// লগআউট
+function logout() {
+    localStorage.removeItem("loggedUser");
+    window.location.replace("index.html");
+}
+
+// ফোন ইনপুট ভ্যালিডেশন
+document.getElementById("paymentNumber")?.addEventListener("input", function(e) {
+    this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11);
+});
+
+// মডেল বাইরে ক্লিক করলে বন্ধ
+window.onclick = function(e) {
+    let modal = document.getElementById("editProfileModal");
+    if(e.target === modal) closeEditModal();
+}
+
+// পেজ লোড
+if(document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+        loadAllData();
+    });
+} else {
+    loadAllData();
+}
+</script>
+</body>
+</html>

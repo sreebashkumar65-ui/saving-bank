@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ড্যাশবোর্ড - Cyber Trust</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body onload="loadDashboard()">
+
+    <div class="container" style="max-width: 500px;">
+        
+        <!-- ইউজার প্রোফাইল কার্ড -->
+        <div class="card" style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+            <div id="userAvatar" style="width: 50px; height: 50px; background: #2563eb; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold;">U</div>
+            <div>
+                <h3 id="userName" style="margin: 0; font-size: 18px;">ইউজার নাম</h3>
+                <p id="userDept" style="margin: 0; font-size: 12px; color: #64748b;">বিভাগ</p>
+            </div>
+        </div>
+
+        <!-- 📢 নোটিশ বোর্ড (অ্যানিমেশন ফিক্সড) -->
+        <div id="noticeDisplay" style="display: none; background: #fff3cd; border-left: 5px solid #ffc107; padding: 10px; margin-bottom: 20px; border-radius: 8px; color: #856404; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.05); overflow: hidden;">
+            <!-- জাভাস্ক্রিপ্ট সরাসরি এখানে marquee ইনজেক্ট করবে -->
+        </div>
+
+        <!-- জমার হিসাব কার্ড -->
+        <div class="card" style="background: linear-gradient(135deg, #2563eb, #1e40af); color: white; text-align: center; padding: 25px; margin-bottom: 20px;">
+            <p style="margin: 0; font-size: 14px; opacity: 0.9; color: white;">আপনার মোট জমা</p>
+            <h2 style="margin: 10px 0; font-size: 36px; color: white;">৳ <span id="total">0</span></h2>
+        </div>
+
+        <!-- 🌍 ট্যুর প্ল্যানিং বাটন ও সেকশন -->
+        <button onclick="toggleTourPlan()" style="width: 100%; background: #059669; color: white; padding: 12px; border-radius: 8px; font-weight: bold; margin-bottom: 20px; border: none; cursor: pointer;">🌍 ট্যুর প্ল্যানিং দেখুন</button>
+
+        <div id="tourPlanSection" style="display: none; margin-bottom: 20px;">
+            <div class="card" style="border: 2px solid #059669; padding: 20px; border-radius: 12px; background: #f0fdf4;">
+                <h3 style="margin-top: 0; color: #059669; text-align: center; border-bottom: 2px solid #bbf7d0; padding-bottom: 10px;">আসন্ন ট্যুর ডিটেইলস</h3>
+                <div id="tourDetailsList" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; font-size: 14px;">
+                    <!-- এই আইডিগুলো ব্যবহার করে অ্যাডমিন প্যানেল থেকে ডাটা আপডেট হবে -->
+                    <p style="margin: 0;"><span id="displayDest"><b>📍 গন্তব্য:</b> কক্সবাজার</span></p>
+                    <p style="margin: 0;"><span id="displayDate"><b>📅 তারিখ:</b> ১০ জুন, ২০২৬</span></p>
+                    <p style="margin: 0;"><span id="displayDuration"><b>⏱️ সময়কাল:</b> ৩ দিন ২ রাত</span></p>
+                    <p style="margin: 0;"><span id="displayCost"><b>💰 খরচ:</b> ৳ ৪,৫০০</span></p>
+                    <p style="margin: 0;"><span id="displayLimit"><b>👥 মেম্বার:</b> ১৫ জন</span></p>
+                    <p style="margin: 0;"><span id="displayStatus"><b>✅ বুকিং:</b> চলছে</span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- পেমেন্ট ফর্ম কার্ড -->
+        <div class="card" style="margin-bottom: 20px;">
+            <h3 style="margin-top: 0; font-size: 16px; text-align: center;">টাকা জমা দিন (bKash)</h3>
+            <input type="number" id="amount" placeholder="পরিমাণ" style="width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box;">
+            <input type="text" id="trxID" placeholder="TrxID" style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box;">
+            <button onclick="submitPayment()" style="width: 100%; background: #2563eb; color: white; padding: 12px; border-radius: 8px; font-weight: bold;">পেমেন্ট সাবমিট করুন</button>
+        </div>
+
+        <!-- পেমেন্ট হিস্ট্রি কার্ড -->
+        <div class="card">
+            <h3 style="text-align: center; margin-top: 0; font-size: 16px;">পেমেন্ট হিস্ট্রি</h3>
+            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                <thead>
+                    <tr style="border-bottom: 2px solid #f1f5f9; text-align: left;">
+                        <th style="padding: 10px 5px;">তারিখ</th>
+                        <th style="padding: 10px 5px;">টাকা</th>
+                        <th style="padding: 10px 5px;">অবস্থা</th>
+                    </tr>
+                </thead>
+                <tbody id="history">
+                    <!-- এখানে ডাটা লোড হবে -->
+                </tbody>
+            </table>
+        </div>
+
+        <button onclick="logout()" class="logout-btn" style="width: 100%; margin-top: 20px; background: #f8fafc; color: #64748b; border: 1px solid #e2e8f0; padding: 12px; border-radius: 8px; cursor: pointer;">লগআউট</button>
+    </div>
+
+    <script src="js/user.js"></script>
+</body>
+</html>
