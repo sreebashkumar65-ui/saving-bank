@@ -160,7 +160,7 @@
             </div>
         </div>
         <div id="alertMessage" class="alert"></div>
-        <!-- ড্যাশবোর্ড – অ্যাকাউন্ট স্ট্যাটাস কার্ড সরানো হয়েছে -->
+        <!-- ড্যাশবোর্ড -->
         <div id="dashboardSection" class="content-section">
             <div class="stats-grid">
                 <div class="stat-card"><div class="stat-icon"><i class="fas fa-money-bill-wave"></i></div><div class="stat-info"><h3>মোট জমা</h3><h2>৳ <span id="totalDeposit">0</span></h2></div></div>
@@ -185,6 +185,7 @@
 <div id="editProfileModal" class="modal"><div class="modal-content"><h3>✏️ প্রোফাইল এডিট</h3><div class="form-group"><label>পূর্ণ নাম</label><input type="text" id="editName" placeholder="আপনার নাম"></div><div class="form-group"><label>পাসওয়ার্ড</label><input type="password" id="editPassword" placeholder="নতুন পাসওয়ার্ড"></div><div class="modal-buttons"><button class="confirm-btn" onclick="saveProfileEdit()">সেভ করুন</button><button class="cancel-btn" onclick="closeEditModal()">বাতিল করুন</button></div></div></div>
 
 <script>
+// ======================= ইউজার প্যানেলের সব ফাংশন =======================
 let currentUser = null, allUsers = [], allNotices = [], tourPlans = [], paymentHistory = [];
 let loggedUser = JSON.parse(localStorage.getItem("loggedUser"));
 if(!loggedUser || loggedUser.role !== "user") window.location.replace("index.html");
@@ -230,7 +231,7 @@ function renderTourPlans(){
 function renderPaymentHistory(){
     let userPayments=paymentHistory.filter(p=>p.phone===currentUser?.phone);
     if(!userPayments.length){ document.getElementById("paymentHistory").innerHTML="<div style='text-align:center;padding:40px;'>📭 কোনো পেমেন্ট ইতিহাস নেই</div>"; return; }
-    let html=`<table><thead><tr><th>তারিখ</th><th>পরিমাণ</th><th>ট্রানজেকশন আইডি</th><th>স্ট্যাটাস</th></tr></thead><tbody>`;
+    let html=`<tr><thead><tr><th>তারিখ</th><th>পরিমাণ</th><th>ট্রানজেকশন আইডি</th><th>স্ট্যাটাস</th></tr></thead><tbody>`;
     userPayments.reverse().forEach(p=>{html+=`<tr><td>${p.date||new Date().toLocaleString()}</td><td>৳ ${p.amount}</td><td>${p.transactionId}</td><td>${p.status==='approved'?'✅ অনুমোদিত':'⏳ পেন্ডিং'}</td></tr>`;});
     html+=`</tbody></table>`;
     document.getElementById("paymentHistory").innerHTML=html;
