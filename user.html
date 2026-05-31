@@ -10,7 +10,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Hind Siliguri', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
         .app-container { display: flex; min-height: 100vh; position: relative; z-index: 1; }
-        /* ডেস্কটপ সাইডবার */
         .sidebar {
             width: 280px; background: rgba(15,23,42,0.95); backdrop-filter: blur(10px);
             color: white; padding: 28px 20px; position: fixed; height: 100vh;
@@ -92,7 +91,6 @@
         .alert { padding: 12px 16px; border-radius: 12px; margin-bottom: 20px; display: none; align-items: center; gap: 10px; }
         .alert.error { background: #fee2e2; border-left: 4px solid #ef4444; color: #991b1b; display: flex; }
         .alert.success { background: #dcfce7; border-left: 4px solid #10b981; color: #065f46; display: flex; }
-        /* মোবাইল ট্যাব বার */
         .mobile-bottom-nav {
             display: none;
             position: fixed;
@@ -162,11 +160,10 @@
             </div>
         </div>
         <div id="alertMessage" class="alert"></div>
-        <!-- ড্যাশবোর্ড -->
+        <!-- ড্যাশবোর্ড – অ্যাকাউন্ট স্ট্যাটাস কার্ড সরানো হয়েছে -->
         <div id="dashboardSection" class="content-section">
             <div class="stats-grid">
                 <div class="stat-card"><div class="stat-icon"><i class="fas fa-money-bill-wave"></i></div><div class="stat-info"><h3>মোট জমা</h3><h2>৳ <span id="totalDeposit">0</span></h2></div></div>
-                <div class="stat-card"><div class="stat-icon"><i class="fas fa-calendar-check"></i></div><div class="stat-info"><h3>অ্যাকাউন্ট স্ট্যাটাস</h3><h2 id="userStatus">Active</h2></div></div>
                 <div class="stat-card"><div class="stat-icon"><i class="fas fa-layer-group"></i></div><div class="stat-info"><h3>আপনার প্ল্যান</h3><h2 id="userDept">-</h2></div></div>
             </div>
             <div class="content-card"><div class="card-header"><h3><i class="fas fa-bullhorn"></i> সর্বশেষ নোটিশ</h3><button class="btn-primary" onclick="showSection('notice')">সব নোটিশ দেখুন</button></div><div id="latestNotices"></div></div>
@@ -207,7 +204,6 @@ function renderDashboard(){
     document.getElementById("userBalance").innerText=`৳ ${currentUser?.deposit||0}`;
     document.getElementById("totalDeposit").innerText=currentUser?.deposit||0;
     document.getElementById("userDept").innerText=currentUser?.dept||"-";
-    document.getElementById("userStatus").innerHTML=currentUser?.status==="active"?"✅ সক্রিয়":"⛔ নিষ্ক্রিয়";
     let userNotices=allNotices.filter(n=>n.phone==="all"||n.phone===currentUser?.phone);
     let latest=userNotices.slice(-3).reverse();
     let nh=latest.length?latest.map(n=>`<div class="notice-item"><div class="notice-date"><i class="far fa-clock"></i> ${n.date}</div><div class="notice-message">${n.message}</div></div>`).join(''):'<div style="text-align:center;padding:20px;">📭 কোনো নোটিশ নেই</div>';
@@ -217,7 +213,7 @@ function renderDashboard(){
     document.getElementById("latestTours").innerHTML=th;
 }
 function renderProfile(){
-    let html=`<div class="info-item"><label>👤 নাম</label><p>${currentUser?.name||''}</p></div><div class="info-item"><label>📞 মোবাইল নম্বর</label><p>${currentUser?.phone||''}</p></div><div class="info-item"><label>📂 বিভাগ</label><p>${currentUser?.dept||''}</p></div><div class="info-item"><label>💰 মোট জমা</label><p>৳ ${currentUser?.deposit||0}</p></div><div class="info-item"><label>📅 রেজিস্ট্রেশন তারিখ</label><p>${currentUser?.registerDate?new Date(currentUser.registerDate).toLocaleDateString('bn-BD'):'নির্ধারিত নয়'}</p></div><div class="info-item"><label>🔒 স্ট্যাটাস</label><p>${currentUser?.status==="active"?"✅ সক্রিয়":"⛔ নিষ্ক্রিয়"}</p></div>`;
+    let html=`<div class="info-item"><label>👤 নাম</label><p>${currentUser?.name||''}</p></div><div class="info-item"><label>📞 মোবাইল নম্বর</label><p>${currentUser?.phone||''}</p></div><div class="info-item"><label>📂 বিভাগ</label><p>${currentUser?.dept||''}</p></div><div class="info-item"><label>💰 মোট জমা</label><p>৳ ${currentUser?.deposit||0}</p></div><div class="info-item"><label>📅 রেজিস্ট্রেশন তারিখ</label><p>${currentUser?.registerDate?new Date(currentUser.registerDate).toLocaleDateString('bn-BD'):'নির্ধারিত নয়'}</p></div></div>`;
     document.getElementById("profileInfo").innerHTML=html;
 }
 function renderNotices(){
